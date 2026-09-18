@@ -1,0 +1,26 @@
+{
+  "name": "nice-cards-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack digital gift card ecommerce platform (React + Vite + Express + MongoDB)",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "dev": "concurrently -n server,client -c yellow,cyan \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build --workspace client",
+    "start": "NODE_ENV=production node server/index.js",
+    "seed": "npm run seed --workspace server",
+    "seed:customers": "npm run seed:customers --workspace server"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
