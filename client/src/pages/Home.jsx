@@ -84,7 +84,7 @@ Perfection.</span>
 
           <motion.div variants={fadeUp} custom={4} className="mt-8 flex flex-wrap gap-6 text-sm">
             {[
-              { icon: <IconTruck size={18} />, label: 'Instant Delivery' },
+              { icon: <IconTruck size={18} />, label: 'Fast Delivery' },
               { icon: <IconShield size={18} />, label: 'Secure Checkout' },
               { icon: <IconClock size={18} />, label: 'No Expiry' },
             ].map((f) => (
