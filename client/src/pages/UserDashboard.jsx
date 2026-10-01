@@ -8,7 +8,7 @@ import { SkeletonRows } from '../components/Skeletons';
 import EmptyState from '../components/EmptyState';
 import { formatINR } from '../utils/currency';
 import { imageUrl } from '../utils/media';
-import { IconPackage, IconClock, IconCheck, IconUser, IconMail, IconPhone, IconX, IconEdit } from '../components/icons';
+import { IconPackage, IconClock, IconCheck, IconUser, IconMail, IconPhone, IconX, IconEdit, IconTruck } from '../components/icons';
 
 const UserDashboard = () => {
   const { user } = useAuth();
@@ -46,12 +46,21 @@ const UserDashboard = () => {
     }
   };
 
-  const statusBadge = (status) =>
-    status === 'pending' ? (
-      <span className="badge bg-amber-100 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400"><IconClock size={12} /> Pending</span>
-    ) : (
+  const statusBadge = (status) => {
+    if (status === 'pending') {
+      return (
+        <span className="badge bg-amber-100 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400"><IconClock size={12} /> Pending</span>
+      );
+    }
+    if (status === 'dispatched') {
+      return (
+        <span className="badge bg-sky-100 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400"><IconTruck size={12} /> Dispatched</span>
+      );
+    }
+    return (
       <span className="badge bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"><IconCheck size={12} /> Delivered</span>
     );
+  };
 
   return (
     <div className="container-x animate-fade-in py-10">
@@ -145,7 +154,7 @@ const UserDashboard = () => {
                     </ul>
                   )}
 
-                  {o.status === 'pending' && (
+                  {(o.status === 'pending' || o.status === 'dispatched') && (
                     <div className="mt-4 flex justify-end border-t border-slate-100 pt-4 dark:border-slate-800">
                       {confirmingId === o.id ? (
                         <div className="flex flex-wrap items-center gap-2">

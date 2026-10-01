@@ -259,8 +259,8 @@ export const cancelOrder = async (req, res, next) => {
     if (!order.user || String(order.user) !== String(req.user._id)) {
       return next(new AppError('You can only cancel your own orders', 403));
     }
-    if (order.status !== 'pending') {
-      return next(new AppError('Only pending orders can be cancelled', 400));
+    if (order.status !== 'pending' && order.status !== 'dispatched') {
+      return next(new AppError('Only pending or dispatched orders can be cancelled', 400));
     }
 
     // Give the reserved stock back to the catalogue
