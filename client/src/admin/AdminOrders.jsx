@@ -8,7 +8,7 @@ import { SkeletonRows } from '../components/Skeletons';
 import OrderDetailModal from './OrderDetailModal';
 import { imageUrl } from '../utils/media';
 import { formatINR } from '../utils/currency';
-import { IconSearch, IconEye, IconTruck, IconTrash, IconSpinner, IconPackage } from '../components/icons';
+import { IconSearch, IconEye, IconTruck, IconTrash, IconSpinner, IconPackage, IconCheck } from '../components/icons';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -61,6 +61,19 @@ const AdminOrders = () => {
     }
   };
 
+  const markDispatched = async (order) => {
+    setActionId(order._id);
+    try {
+      await adminApi.put(`/order/${order._id}/dispatch`);
+      toast.success(`Order ${order.orderId} marked as dispatched`);
+      fetchOrders();
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+    } finally {
+      setActionId(null);
+    }
+  };
+
   const doDelete = async () => {
     setActionId('delete');
     try {
@@ -79,8 +92,8 @@ const AdminOrders = () => {
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-display text-xl font-extrabold">Pending Orders</h2>
-          <p className="text-sm text-slate-400">{total} pending order{total === 1 ? '' : 's'}</p>
+          <h2 className="font-display text-xl font-extrabold">Orders</h2>
+          <p className="text-sm text-slate-400">{total} order{total === 1 ? '' : 's'}</p>
         </div>
         <form onSubmit={submitSearch} className="relative">
           <IconSearch size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -94,7 +107,7 @@ const AdminOrders = () => {
         ) : orders.length === 0 ? (
           <div className="py-16 text-center">
             <IconPackage size={36} className="mx-auto mb-3 text-slate-300 dark:text-slate-600" />
-            <p className="text-sm font-semibold text-slate-400">No pending orders</p>
+            <p className="text-sm font-semibold text-slate-400">No orders</p>
             <p className="text-xs text-slate-400">New orders from the store will appear here.</p>
           </div>
         ) : (
@@ -136,7 +149,11 @@ const AdminOrders = () => {
                   <td className="px-5 py-3 font-bold">{formatINR(o.total)}</td>
                   <td className="px-5 py-3 text-xs text-slate-400">{new Date(o.createdAt).toLocaleDateString()}</td>
                   <td className="px-5 py-3">
-                    <span className="badge bg-amber-100 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">Pending</span>
+                    {o.status === 'dispatched' ? (
+                      <span className="badge bg-sky-100 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400">Dispatched</span>
+                    ) : (
+                      <span className="badge bg-amber-100 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">Pending</span>
+                    )}
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-1.5">
@@ -144,11 +161,18 @@ const AdminOrders = () => {
                         <IconEye size={16} />
                       </button>
                       <button
+                        onClick={() => markDispatched(o)}
+                        disabled={actionId === o._id || o.status === 'dispatched'}
+                        className="btn bg-sky-600 px-3 py-2 text-xs text-white hover:bg-sky-700 disabled:opacity-60"
+                      >
+                        {actionId === o._id ? <IconSpinner size={14} /> : <IconTruck size={14} />} Dispatch
+                      </button>
+                      <button
                         onClick={() => markDelivered(o)}
                         disabled={actionId === o._id}
                         className="btn bg-emerald-600 px-3 py-2 text-xs text-white hover:bg-emerald-700 disabled:opacity-60"
                       >
-                        {actionId === o._id ? <IconSpinner size={14} /> : <IconTruck size={14} />} Delivered
+                        {actionId === o._id ? <IconSpinner size={14} /> : <IconCheck size={14} />} Delivered
                       </button>
                       <button onClick={() => setConfirmDelete(o)} className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-500 dark:hover:bg-rose-500/10" aria-label="Delete order">
                         <IconTrash size={16} />

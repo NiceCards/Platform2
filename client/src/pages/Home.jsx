@@ -33,17 +33,17 @@ const useMediaQuery = (query) => {
 const Hero = () => {
   const [q, setQ] = useState('');
   return (
-    <section className="relative overflow-hidden text-brand-950 dark:text-white">
+    <section className="relative overflow-hidden bg-brand-50 text-brand-950 dark:bg-brand-950 dark:text-white">
       <picture className="contents">
         <source media="(max-width: 767px)" srcSet="/bg2.jpg" />
         <img
           src="/bg1.png"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+          className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center"
         />
       </picture>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-50/95 via-brand-50/80 to-brand-100/30 dark:from-brand-950/92 dark:via-brand-900/75 dark:to-brand-700/40" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-50/80 via-brand-50/40 to-transparent dark:from-brand-950/85 dark:via-brand-900/50 dark:to-transparent" />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-amber-400/30 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-orange-400/20 blur-3xl" />

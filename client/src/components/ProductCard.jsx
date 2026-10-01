@@ -54,11 +54,6 @@ const ProductCard = ({ product }) => {
               <span className="badge bg-rose-600 text-white">-{discount}%</span>
             )}
           </div>
-          {outOfStock && (
-            <div className="absolute inset-0 grid place-items-center bg-black/50 backdrop-blur-[2px]">
-              <span className="badge bg-rose-600 px-4 py-1.5 text-sm text-white">Out of Stock</span>
-            </div>
-          )}
         </div>
       </Link>
 

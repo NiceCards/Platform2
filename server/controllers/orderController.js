@@ -153,7 +153,7 @@ export const deliverOrder = async (req, res, next) => {
     if (!order) {
       return next(new AppError('Order not found', 404));
     }
-    if (order.status !== 'pending') {
+    if (order.status === 'delivered') {
       return next(new AppError('Order has already been delivered', 400));
     }
 
@@ -175,6 +175,39 @@ export const deliverOrder = async (req, res, next) => {
       success: true,
       message: 'Order marked as delivered',
       order: toJSON(delivered),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PUT /order/:id/dispatch - Mark a pending order as dispatched.
+ * Unlike "deliver", the order stays in the Orders collection so it
+ * remains visible on the same admin orders page.
+ */
+export const dispatchOrder = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+    if (!order) {
+      return next(new AppError('Order not found', 404));
+    }
+    if (order.status === 'dispatched') {
+      return next(new AppError('Order has already been dispatched', 400));
+    }
+    if (order.status === 'delivered') {
+      return next(new AppError('Order has already been delivered', 400));
+    }
+
+    order.status = 'dispatched';
+    order.dispatchedAt = new Date();
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Order marked as dispatched',
+      order: toJSON(order),
     });
   } catch (error) {
     next(error);

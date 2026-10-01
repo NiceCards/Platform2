@@ -3,6 +3,7 @@ import {
   placeOrder,
   getOrders,
   deliverOrder,
+  dispatchOrder,
   deleteOrder,
   cancelOrder,
   getDeliveredOrders,
@@ -24,6 +25,7 @@ router.put('/order/:id/cancel', protect, cancelOrder);
 // Admin
 router.get('/orders', requireAdmin, getOrders);
 router.put('/order/:id/deliver', requireAdmin, deliverOrder);
+router.put('/order/:id/dispatch', requireAdmin, dispatchOrder);
 router.delete('/order/:id', requireAdmin, deleteOrder);
 router.get('/orders/delivered', requireAdmin, getDeliveredOrders);
 

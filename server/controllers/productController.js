@@ -64,9 +64,9 @@ const buildSort = (sort) => {
  * Normalizes uploaded image files and JSON image lists into an array of URLs.
  * Newly uploaded files are pushed to Cloudflare R2 (falling back to base64 in
  * MongoDB when R2 is not configured). Existing image URLs are merged in so
- * admins can keep the current pictures while adding more (max 2 per product).
+ * admins can keep the current pictures while adding more (max 3 per product).
  */
-const MAX_IMAGES = 2;
+const MAX_IMAGES = 3;
 
 const parseImages = async (body, files) => {
   let existing = [];

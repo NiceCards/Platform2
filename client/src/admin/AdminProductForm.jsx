@@ -7,7 +7,7 @@ import { getErrorMessage } from '../services/api';
 import { useCategories } from '../hooks/useProducts';
 import { IconSpinner, IconUpload, IconImage, IconChevronLeft, IconX } from '../components/icons';
 
-const MAX_IMAGES = 2;
+const MAX_IMAGES = 3;
 
 const emptyForm = {
   name: '',

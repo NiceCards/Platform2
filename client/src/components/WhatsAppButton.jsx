@@ -1,6 +1,6 @@
 import { IconWhatsApp } from './icons';
 
-const PHONE = '917764839112';
+const PHONE = '919905240717';
 const DEFAULT_MESSAGE = 'Hi Nice Cards, I need help with my order.';
 
 /**

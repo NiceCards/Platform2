@@ -38,12 +38,16 @@ const orderSchema = new mongoose.Schema(
     total: { type: Number, required: true, min: 0 },
     status: {
       type: String,
-      enum: ['pending', 'delivered', 'cancelled'],
+      enum: ['pending', 'dispatched', 'delivered', 'cancelled'],
       default: 'pending',
     },
     paymentMethod: {
       type: String,
       default: 'none',
+    },
+    dispatchedAt: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true }
