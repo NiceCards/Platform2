@@ -41,7 +41,7 @@ const Footer = () => (
         <ul className="mt-3 space-y-2 text-sm">
           <li><span className="text-slate-600 dark:text-slate-300">nicecardramgarh@gmail.com</span></li>
           <li><span className="text-slate-600 dark:text-slate-300">+91 9905240717</span></li>
-          <li><span className="text-slate-600 dark:text-slate-300">Instant delivery</span></li>
+          <li><span className="text-slate-600 dark:text-slate-300">Fast delivery</span></li>
         </ul>
       </div>
     </div>
